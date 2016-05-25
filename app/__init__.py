@@ -5,6 +5,11 @@ from flask import Flask, request, render_template
 app = Flask(__name__, static_folder='static')
 
 
+def chunks(l, n):
+    for i in range(0, len(l), n):
+        yield l[i:i+n]
+
+
 @app.route('/')
 def index():
     deposit = request.args['deposit'] if 'deposit' in request.args else 500
@@ -23,30 +28,32 @@ def index():
     response_json = response.json()
     item_ids = [str(item['simple_item']['item_id']) for item in response_json['list_items']]
 
-    api_endpoint2 = 'https://api.zigbang.com/v1/items?detail=true'
-    for i in item_ids:
-        api_endpoint2 = '{}&item_ids={}'.format(api_endpoint2, i)
-
-    response = requests.get(api_endpoint2)
-    response_json = response.json()
     room_list = []
-    for item in response_json['items']:
-        item = item['item']
-        data = {
-            'title': item['title'],
-            'description': item['description'],
-            'building_type': item['building_type'],
-            'room_type': item['room_type'],
-            'floor': '{}/{}'.format(item['floor'], item['floor_all']),
-            'updated_at': item['updated_at'],
-            'options': item['options'],
-            'deposit': item['deposit'],
-            'rent': item['rent'],
-            'manage': '{}({})'.format(item['manage_cost'], item['manage_cost_inc']),
-            'size': '{}({}평)'.format(item['size_m2'], int(item['size'])),
-            'link': 'https://www.zigbang.com/items1/{}'.format(item['id']),
-            'thumbnail': '{}?w=400&h=300'.format(item['images'][0]['url'])
-        }
-        room_list.append(data)
+
+    for sub_ids in chunks(item_ids, 100):
+        api_endpoint2 = 'https://api.zigbang.com/v1/items?detail=true'
+        for i in sub_ids:
+            api_endpoint2 = '{}&item_ids={}'.format(api_endpoint2, i)
+
+        response = requests.get(api_endpoint2)
+        response_json = response.json()
+        for item in response_json['items']:
+            item = item['item']
+            data = {
+                'title': item['title'],
+                'description': item['description'],
+                'building_type': item['building_type'],
+                'room_type': item['room_type'],
+                'floor': '{}/{}'.format(item['floor'], item['floor_all']),
+                'updated_at': item['updated_at'],
+                'options': item['options'],
+                'deposit': item['deposit'],
+                'rent': item['rent'],
+                'manage': '{}({})'.format(item['manage_cost'], item['manage_cost_inc']),
+                'size': '{}({}평)'.format(item['size_m2'], int(item['size'])),
+                'link': 'https://www.zigbang.com/items1/{}'.format(item['id']),
+                'thumbnail': '{}?w=400&h=300'.format(item['images'][0]['url'])
+            }
+            room_list.append(data)
 
     return render_template('index.html', room_list=room_list)
