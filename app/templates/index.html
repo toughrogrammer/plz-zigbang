@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.min.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/semantic-ui/dist/semantic.min.css') }}"/>
+  <style>
+    .ui.card > .content {
+      padding: .7em;
+    }
+
+    .ui.card > .content > .header {
+      font-size: 1em !important;
+    }
+
+    .ui.card > .image > a > div.image {
+      width: 100%;
+      height: 0;
+      padding-bottom: 70%;
+      background-repeat: no-repeat;
+      -webkit-background-size: cover;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+
+<div class="ui container">
+  <div class="ui four column grid">
+    {% for item in room_list %}
+    <div class="column">
+      <div class="ui link card">
+        <div class="image">
+          <a class="image" href="{{ item.link }}">
+            <div class="image background" style="background-image: url({{ item.thumbnail }})"></div>
+          </a>
+        </div>
+        <div class="content">
+          <a class="header" href="{{ item.link }}">{{ item.title }}</a>
+          <div class="meta">
+            {{ item.building_type }} {{ item.room_type }} {{ item.floor }}
+          </div>
+          <div class="description">
+            <div class="ui list">
+              <div class="item">
+                <i class="square outline icon"></i>
+                <div class="content">
+                  크기 : {{ item.size }}
+                </div>
+              </div>
+              <div class="item">
+                <i class="money icon"></i>
+                <div class="content">
+                  관리비 : {{ item.manage }}
+                </div>
+              </div>
+              <div class="item">
+                <i class="options icon"></i>
+                <div class="content">
+                  옵션 : {{ item.options }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="extra content">
+          <span class="right floated">
+            {{ item.updated_at }}
+          </span>
+          <span>
+            <i class="won icon"></i>
+            {{ item.deposit }}/{{ item.rent }}
+          </span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='lib/jquery/dist/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='lib/semantic-ui/dist/semantic.min.js') }}"></script>
+
+</body>
+</html>

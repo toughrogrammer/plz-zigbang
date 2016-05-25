@@ -1,0 +1,9 @@
+{
+  "name": "zigbang2.com",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "*",
+    "font-awesome": "*",
+    "semantic-ui": "*"
+  }
+}
