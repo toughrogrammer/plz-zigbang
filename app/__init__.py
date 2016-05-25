@@ -7,8 +7,8 @@ app = Flask(__name__, static_folder='static')
 
 @app.route('/')
 def index():
-    deposit = request.args if 'deposit' in request.args else 8000
-    rent = request.args if 'rent' in request.args else 30
+    deposit = request.args['deposit'] if 'deposit' in request.args else 500
+    rent = request.args['rent'] if 'rent' in request.args else 40
     params = {
         'lat_south': 37.47728517173178,
         'lat_north': 37.480090431877294,
