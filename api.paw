@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>99AD308E-BFCE-4FCB-832E-99F0655F683F</UUID>
-        <nextObjectID>112</nextObjectID>
+        <nextObjectID>116</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -62,7 +62,7 @@
     </databaseInfo>
     <object type="LMREQUEST" id="z102">
         <attribute name="uuid" type="string">E7C0109A-335F-45B1-8CCE-9DCE79D1FDDC</attribute>
-        <attribute name="url" type="string">https://api.zigbang.com/v2/items?lat_south=37.47728517173178\u2600lat_north=37.480090431877294\u2600lng_west=126.95566533252335\u2600lng_east=126.96495717452899\u2600room=01;02;03;04;05\u2600deposit_e=8000\u2600rent_e=30</attribute>
+        <attribute name="url" type="string">https://api.zigbang.com/v2/items?lat_south=37.47728517173178\u2600lat_north=37.480090431877294\u2600lng_west=126.95566533252335\u2600lng_east=126.96495717452899\u2600room=01%3B02%3B03%3B04%3B05\u2600deposit_e=500\u2600rent_e=50</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -165,5 +165,30 @@
         <attribute name="name" type="string">Default Domain</attribute>
         <relationship name="environments" type="0/0" destination="LMENVIRONMENT" idrefs="z111"></relationship>
         <relationship name="variables" type="0/0" destination="LMENVIRONMENTVARIABLE" idrefs="z108"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z115">
+        <attribute name="uuid" type="string">EBEBD89F-3298-48DE-9890-DE6A8AB173E0</attribute>
+        <attribute name="url" type="string">http://localhost:8000/?deposit=8000\u2600rent=30\u2600lat_center=37.47710711585418\u2600lng_center=126.9634273566037\u2600lat_width=0.00937729383589\u2600lng_height=0.02195073249373</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">GET</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="order" type="int64">3</attribute>
+        <attribute name="name" type="string">My API (4)</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z116"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z116">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z115"></relationship>
     </object>
 </database>
