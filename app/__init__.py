@@ -56,9 +56,12 @@ def index():
                 'rent': item['rent'],
                 'manage': '{}({})'.format(item['manage_cost'], item['manage_cost_inc']),
                 'size': '{}({}평)'.format(item['size_m2'], int(item['size'])),
+                'size_m2': item['size_m2'],
                 'link': 'https://www.zigbang.com/items1/{}'.format(item['id']),
                 'thumbnail': '{}?w=400&h=300'.format(item['images'][0]['url'])
             }
             room_list.append(data)
+
+    room_list = sorted(room_list, key=lambda item: item['size_m2'], reverse=True)
 
     return render_template('index.html', room_list=room_list)
