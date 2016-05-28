@@ -14,11 +14,16 @@ def chunks(l, n):
 def index():
     deposit = request.args['deposit'] if 'deposit' in request.args else 500
     rent = request.args['rent'] if 'rent' in request.args else 40
+    lat_center = float(request.args['lat_center']) if 'lat_center' in request.args else 37.47710711585418
+    lng_center = float(request.args['lng_center']) if 'lng_center' in request.args else 126.9634273566037
+    lat_width = float(request.args['lat_width']) if 'lat_width' in request.args else 0.00937729383589
+    lng_height = float(request.args['lng_height']) if 'lng_height' in request.args else 0.02195073249373
+
     params = {
-        'lat_south': 37.47728517173178,
-        'lat_north': 37.480090431877294,
-        'lng_west': 126.95566533252335,
-        'lng_east': 126.96495717452899,
+        'lat_south': lat_center - lat_width / 2,
+        'lat_north': lat_center + lat_width / 2,
+        'lng_west': lng_center - lng_height / 2,
+        'lng_east': lng_center + lng_height / 2,
         'room': ', '.join([str(x) for x in [1, 2, 3, 4, 5]]),
         'deposit_e': deposit,
         'rent_e': rent
